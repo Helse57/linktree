@@ -128,10 +128,18 @@ export default async function HomePage() {
       <div className="flex items-center gap-4 mt-4">
         {data.socials.map((social) => {
           if (social.href.includes("twitter")) {
-            return <TwitterIcon key={social.href} />;
+            return (
+              <a href={social.href} key={social.href} target="_blank">
+                <TwitterIcon key={social.href} />
+              </a>
+            );
           }
           if (social.href.includes("github")) {
-            return <GitHubIcon key={social.href} />;
+            return (
+              <a href={social.href} key={social.href} target="_blank">
+                <GitHubIcon key={social.href} />
+              </a>
+            );
           }
         })}
       </div>
