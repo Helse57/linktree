@@ -1,6 +1,9 @@
-/* eslint-disable react/jsx-key */
 import Image from "next/image";
-import data from "../data.json";
+import { get } from "@vercel/edge-config";
+import { redirect } from "next/navigation";
+
+export const dynamic = "force-dynamic",
+  runtime = "edge";
 
 function TwitterIcon() {
   return (
@@ -84,8 +87,31 @@ function LinkCard({
     </a>
   );
 }
+interface Data {
+  name: string;
+  avatar: string;
+  links: Link[];
+  socials: Social[];
+}
 
-export default function Home() {
+interface Link {
+  href: string;
+  title: string;
+  image?: string;
+}
+
+interface Social {
+  href: string;
+  title: string;
+  image?: string;
+}
+export default async function HomePage() {
+  const data: Data | undefined = await get("linktree");
+
+  if (!data) {
+    redirect("https://google.com/");
+  }
+
   return (
     <div className="flex items-center flex-col mx-auto w-full justify-center mt-16 px-8">
       <Image
@@ -102,10 +128,10 @@ export default function Home() {
       <div className="flex items-center gap-4 mt-4">
         {data.socials.map((social) => {
           if (social.href.includes("twitter")) {
-            return <TwitterIcon />;
+            return <TwitterIcon key={social.href} />;
           }
           if (social.href.includes("github")) {
-            return <GitHubIcon />;
+            return <GitHubIcon key={social.href} />;
           }
         })}
       </div>
