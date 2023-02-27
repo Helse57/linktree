@@ -4,7 +4,7 @@ const nextConfig = {
     appDir: true,
   },
   images: {
-    domains: ['pbs.twimg.com', 'img1.freepng.fr']
+    domains: ['pbs.twimg.com', 'img1.freepng.fr', 'proinfluent.b-cdn.net', 's3-symbol-logo.tradingview.com']
   }
 }
 
